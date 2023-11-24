@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { appServerApi } from '../api/server';
 
 class AppUpdater {
   constructor() {
@@ -57,6 +58,9 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
+  appServerApi.listen(() => {
+    console.log('server running');
+  });
   if (isDebug) {
     await installExtensions();
   }
